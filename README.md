@@ -70,7 +70,7 @@ user.age = 42
 
 You can also create an entity using a data dictionary :
 ```swift
-let userData: [String: AnyObject?] = [
+let userData: [String: Any?] = [
   "first_name": "John",
   "last_name": "Doe",
   "email": "john.doe@foobar.com",
