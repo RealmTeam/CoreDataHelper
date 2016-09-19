@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 // MARK: - CoreDataHelper entity protocol
-public protocol CDHelperEntity: class {
+public protocol CDHelperEntity: class, NSFetchRequestResult {
     static var entityName: String! { get }
 }
 
@@ -18,7 +18,7 @@ public protocol CDHelperEntity: class {
 public extension CDHelperEntity {
     
     // MARK: Private static variables
-    private static var mainContext: NSManagedObjectContext! {
+    fileprivate static var mainContext: NSManagedObjectContext! {
         let context: NSManagedObjectContext! = CDHelper.mainContext
         
         assert((context != nil), "CDHelper error: mainContext must be set in the AppDelegate.")
@@ -35,7 +35,7 @@ public extension CDHelperEntity {
     /// Delete the entity from the main context.
     public func destroy() {
         if let object = self as? NSManagedObject {
-            Self.mainContext.deleteObject(object)
+            Self.mainContext.delete(object)
             self.save()
         }
     }
@@ -47,7 +47,7 @@ public extension CDHelperEntity {
     /// - returns:
     ///     A freshly created entity.
     public static func new() -> Self {
-        let newEntity: Self = NSEntityDescription.insertNewObjectForEntityForName(self.entityName, inManagedObjectContext: Self.mainContext) as! Self
+        let newEntity: Self = NSEntityDescription.insertNewObject(forEntityName: self.entityName, into: Self.mainContext) as! Self
         return newEntity
     }
     
@@ -57,7 +57,7 @@ public extension CDHelperEntity {
     ///     - Dictionary: A dictionary of data used to fill your entity
     /// - returns:
     ///     A freshly created entity filled with the data.
-    public static func new(data: [String: AnyObject?]) -> Self {
+    public static func new(_ data: [String: AnyObject?]) -> Self {
         let newEntity: NSManagedObject = self.new() as! NSManagedObject
         let availableKeys = newEntity.entity.attributesByName.keys
         
@@ -76,11 +76,11 @@ public extension CDHelperEntity {
         return self._fetchUsingFetchRequest(self._buildFindAllRequest(usingSortDescriptors: sortDescriptors))
     }
     
-    public static func findOne(predicate: String) -> Self? {
+    public static func findOne(_ predicate: String) -> Self? {
         return self._fetchUsingFetchRequest(self._buildFindOneRequest(predicate)).first
     }
     
-    public static func find(predicate: String, usingSortDescriptors sortDescriptors: [NSSortDescriptor]! = nil, limit fetchLimit: Int! = nil) -> [Self] {
+    public static func find(_ predicate: String, usingSortDescriptors sortDescriptors: [NSSortDescriptor]! = nil, limit fetchLimit: Int! = nil) -> [Self] {
         return self._fetchUsingFetchRequest(self._buildFindRequest(predicate, usingSortDescriptors: sortDescriptors, limit: fetchLimit))
     }
     
@@ -88,18 +88,18 @@ public extension CDHelperEntity {
         self._asynchronouslyFetchUsingRequest(self._buildFindAllRequest(usingSortDescriptors: sortDescriptors), completion: completion)
     }
     
-    public static func asynchronouslyFindOne(predicate: String, completion: (Self?) -> Void) {
+    public static func asynchronouslyFindOne(_ predicate: String, completion: (Self?) -> Void) {
         self._asynchronouslyFetchUsingRequest(self._buildFindOneRequest(predicate), completion: completion)
     }
     
-    public static func asynchronouslyFind(predicate: String, usingSortDescriptors sortDescriptors: [NSSortDescriptor]! = nil, limit fetchLimit: Int! = nil, completion: ([Self]) -> Void) {
+    public static func asynchronouslyFind(_ predicate: String, usingSortDescriptors sortDescriptors: [NSSortDescriptor]! = nil, limit fetchLimit: Int! = nil, completion: ([Self]) -> Void) {
         self._asynchronouslyFetchUsingRequest(self._buildFindRequest(predicate, usingSortDescriptors: sortDescriptors, limit: fetchLimit), completion: completion)
     }
     
     // MARK: Private class methods
-    private static func _buildFetchRequestUsingPredicate(predicate: String!, sortDescriptors: [NSSortDescriptor]!, fetchLimit: Int!) -> NSFetchRequest {
-        let fetchRequest: NSFetchRequest = NSFetchRequest()
-        let entity: NSEntityDescription! = NSEntityDescription.entityForName(self.entityName, inManagedObjectContext: Self.mainContext)
+    fileprivate static func _buildFetchRequestUsingPredicate(_ predicate: String!, sortDescriptors: [NSSortDescriptor]!, fetchLimit: Int!) -> NSFetchRequest<Self> {
+        let fetchRequest: NSFetchRequest = NSFetchRequest<Self>()
+        let entity: NSEntityDescription! = NSEntityDescription.entity(forEntityName: self.entityName, in: Self.mainContext)
         fetchRequest.entity = entity
         fetchRequest.predicate = (predicate != nil ? NSPredicate(format: predicate) : nil)
         fetchRequest.sortDescriptors = sortDescriptors
@@ -110,48 +110,49 @@ public extension CDHelperEntity {
         return fetchRequest
     }
     
-    private static func _buildFindAllRequest(usingSortDescriptors sortDescriptors: [NSSortDescriptor]! = nil) -> NSFetchRequest {
+    fileprivate static func _buildFindAllRequest(usingSortDescriptors sortDescriptors: [NSSortDescriptor]! = nil) -> NSFetchRequest<Self> {
         return self._buildFetchRequestUsingPredicate(nil, sortDescriptors: sortDescriptors, fetchLimit: nil)
     }
     
-    private static func _buildFindOneRequest(predicate: String) -> NSFetchRequest {
+    fileprivate static func _buildFindOneRequest(_ predicate: String) -> NSFetchRequest<Self> {
         return self._buildFetchRequestUsingPredicate(predicate, sortDescriptors: nil, fetchLimit: nil)
     }
     
-    private static func _buildFindRequest(predicate: String, usingSortDescriptors sortDescriptors: [NSSortDescriptor]! = nil, limit fetchLimit: Int! = nil) -> NSFetchRequest {
+    fileprivate static func _buildFindRequest(_ predicate: String, usingSortDescriptors sortDescriptors: [NSSortDescriptor]! = nil, limit fetchLimit: Int! = nil) -> NSFetchRequest<Self> {
         return self._buildFetchRequestUsingPredicate(predicate, sortDescriptors: sortDescriptors, fetchLimit: fetchLimit)
     }
     
-    private static func _fetchUsingFetchRequest(fetchRequest: NSFetchRequest) -> [Self] {
-        guard let results = try? Self.mainContext.executeFetchRequest(fetchRequest) as? [Self], let resultsArray = results.map({$0}) else {
+    fileprivate static func _fetchUsingFetchRequest(_ fetchRequest: NSFetchRequest<Self>) -> [Self] {
+        guard let results = try? Self.mainContext.fetch(fetchRequest) else {
             print("CDHelper error: Cannot fetch results. Empty array has been returned.")
             return []
         }
         
-        return resultsArray
+        return results
     }
     
-    private static func _asynchronouslyFetchUsingRequest(fetchRequest: NSFetchRequest, completion: Any) {
+    fileprivate static func _asynchronouslyFetchUsingRequest(_ fetchRequest: NSFetchRequest<Self>, completion: Any) {
         let asyncRequest: NSAsynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result: NSAsynchronousFetchResult!) -> Void in
-            let result: [Self]? = (result.finalResult as? [Self])?.map({$0})
+            
+            let result: [Self] = result.finalResult ?? []
             
             if let completion = completion as? (([Self]) -> Void) {
-                completion(result != nil ? result! : [])
+                completion(result)
             } else if let completion = completion as? ((Self?) -> Void) {
-                completion(result?.first)
+                completion(result.first ?? nil)
             } else {
                 fatalError("CDHelper error: completion variable has a wrong type. Must be '([Self]) -> Void' or '(Self?) -> Void'.")
             }
         }
         
         do {
-            try Self.mainContext.executeRequest(asyncRequest)
+            try Self.mainContext.execute(asyncRequest as NSPersistentStoreRequest)
         } catch {
             print("CDHelper error: Cannot fetch results. Empty array has been returned.")
         }
     }
     
-    private static func _saveContext() {
+    fileprivate static func _saveContext() {
         if self.mainContext.hasChanges {
             do {
                 try self.mainContext.save()
@@ -165,29 +166,16 @@ public extension CDHelperEntity {
 // MARK: - CoreDataHelper main class
 public final class CDHelper {
     
-    // MARK: Private class variables
-    private class var _sharedInstance: CDHelper {
-        
-        struct Static {
-            static var instance: CDHelper?
-            static var token: dispatch_once_t = 0
-        }
-        
-        dispatch_once(&Static.token) {
-            Static.instance = CDHelper()
-        }
-        
-        return Static.instance!
-    }
+    fileprivate static var _sharedInstance: CDHelper = CDHelper()
     
     // MARK: Public class variables
     public class var mainContext: NSManagedObjectContext! { return self._sharedInstance._mainContext }
     
     // MARK: Private instance variables
-    private var _mainContext: NSManagedObjectContext?
+    fileprivate var _mainContext: NSManagedObjectContext?
     
     // MARK: Public class methods
-    public class func initializeWithMainContext(mainContext: NSManagedObjectContext) {
+    public class func initializeWithMainContext(_ mainContext: NSManagedObjectContext) {
         self._sharedInstance._mainContext = mainContext
     }
 }

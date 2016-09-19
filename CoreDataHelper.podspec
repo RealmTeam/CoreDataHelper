@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "CoreDataHelper"
-  s.version      = "1.0"
+  s.version      = "1.0.0"
   s.summary      = "CoreDataHelper"
 
   # This description is used to generate tags and improve search results.
@@ -29,7 +29,6 @@ Pod::Spec.new do |s|
                    DESC
 
   s.homepage     = "https://github.com/lobodart/CoreDataHelper"
-  # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -78,7 +77,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/lobodart/CoreDataHelper.git", :tag => "v1.0" }
+  s.source       = { :git => "https://github.com/lobodart/CoreDataHelper.git", :tag => "v1.0.0" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
