@@ -142,7 +142,8 @@
 					};
 					48A500E81C9227080000B0F9 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 7AP28XFFFQ;
+						DevelopmentTeam = 58G6JMC92R;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -348,22 +349,24 @@
 		48A500F71C9227080000B0F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 7AP28XFFFQ;
+				DEVELOPMENT_TEAM = 58G6JMC92R;
 				INFOPLIST_FILE = CoreDataHelperTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fr.louisbodart.CoreDataHelperTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		48A500F81C9227080000B0F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 7AP28XFFFQ;
+				DEVELOPMENT_TEAM = 58G6JMC92R;
 				INFOPLIST_FILE = CoreDataHelperTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fr.louisbodart.CoreDataHelperTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

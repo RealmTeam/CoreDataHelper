@@ -57,7 +57,7 @@ public extension CDHelperEntity {
     ///     - Dictionary: A dictionary of data used to fill your entity
     /// - returns:
     ///     A freshly created entity filled with the data.
-    public static func new(_ data: [String: AnyObject?]) -> Self {
+    public static func new(_ data: [String: Any?]) -> Self {
         let newEntity: NSManagedObject = self.new() as! NSManagedObject
         let availableKeys = newEntity.entity.attributesByName.keys
         
