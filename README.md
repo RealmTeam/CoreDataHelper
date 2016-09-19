@@ -22,6 +22,7 @@ To start with CoreDataHelper, it is pretty simple. Just go to your `AppDelegate.
 func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
   CDHelper.initializeWithMainContext(self.managedObjectContext)
+  CDHelper.initializeWithMainContext(self.persistentContainer.viewContext) // New XCode 8/Swift 3 template
   
   return true
 }
