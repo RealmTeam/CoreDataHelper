@@ -10,12 +10,12 @@ import Foundation
 import CoreData
 
 // MARK: - CoreDataHelper entity protocol
-public protocol CDHelperEntity: class, NSFetchRequestResult {
-    static var entityName: String! { get }
+@objc public protocol CDHelperEntity: NSFetchRequestResult {
+    @objc optional static var entityName: String { get }
 }
 
 // MARK: - CoreDataHelper entity protocol extension
-public extension CDHelperEntity {
+public extension CDHelperEntity where Self: NSManagedObject {
     
     // MARK: Private static variables
     fileprivate static var mainContext: NSManagedObjectContext! {
@@ -25,11 +25,15 @@ public extension CDHelperEntity {
         return context
     }
     
+    fileprivate static var entityName: String {
+        return "\(Self.self)"
+    }
+    
     // MARK: Public instance methods
     
     /// Save the entity in the main context.
     public func save() {
-        Self._saveContext()
+        CDHelper._sharedInstance.saveContext()
     }
     
     /// Delete the entity from the main context.
@@ -58,7 +62,7 @@ public extension CDHelperEntity {
     /// - returns:
     ///     A freshly created entity filled with the data.
     public static func new(_ data: [String: Any?]) -> Self {
-        let newEntity: NSManagedObject = self.new() as! NSManagedObject
+        let newEntity: NSManagedObject = self.new()
         let availableKeys = newEntity.entity.attributesByName.keys
         
         for (key, value) in data {
@@ -151,16 +155,6 @@ public extension CDHelperEntity {
             print("CDHelper error: Cannot fetch results. Empty array has been returned.")
         }
     }
-    
-    fileprivate static func _saveContext() {
-        if self.mainContext.hasChanges {
-            do {
-                try self.mainContext.save()
-            } catch let exception {
-                print("CDHelper error: Cannot save entity. Reason: \(exception)")
-            }
-        }
-    }
 }
 
 // MARK: - CoreDataHelper main class
@@ -169,13 +163,85 @@ public final class CDHelper {
     fileprivate static var _sharedInstance: CDHelper = CDHelper()
     
     // MARK: Public class variables
-    public class var mainContext: NSManagedObjectContext! { return self._sharedInstance._mainContext }
+    public class var mainContext: NSManagedObjectContext! { return self._sharedInstance.managedObjectContext }
     
     // MARK: Private instance variables
-    fileprivate var _mainContext: NSManagedObjectContext?
+    fileprivate var _dataSchemeName: String!
     
     // MARK: Public class methods
-    public class func initializeWithMainContext(_ mainContext: NSManagedObjectContext) {
-        self._sharedInstance._mainContext = mainContext
+    public class func initializeWith(dataSchemeName dataSchemeName: String) {
+        self._sharedInstance._dataSchemeName = dataSchemeName
+    }
+    
+    fileprivate init() {
+        if self._dataSchemeName == nil {
+            guard let dataSchemeName = (Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String)?.replacingOccurrences(of: " ", with: "_") else {
+                fatalError("CDHelper error")
+            }
+            
+            self._dataSchemeName = dataSchemeName
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationWillTerminate(notification:)), name: Notification.Name.UIApplicationWillTerminate, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationWillTerminate, object: nil)
+    }
+    
+    @objc func applicationWillTerminate(notification: Notification) {
+        self.saveContext()
+    }
+    
+    // MARK: Public instance variables
+    lazy var applicationDocumentsDirectory: NSURL = {
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return urls[urls.count - 1] as NSURL
+    }()
+    
+    lazy var managedObjectModel: NSManagedObjectModel = {
+        assert((self._dataSchemeName != nil), "CDHelper error: CDHelper must be initialized in the AppDelegate.")
+        let modelURL = Bundle.main.url(forResource: self._dataSchemeName, withExtension: "momd")!
+        return NSManagedObjectModel(contentsOf: modelURL)!
+    }()
+    
+    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
+        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("SingleViewCoreData.sqlite")
+        var failureReason = "There was an error creating or loading the application's saved data."
+        do {
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+        } catch {
+            // Report any error we got.
+            var dict = [String: AnyObject]()
+            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject?
+            dict[NSLocalizedFailureReasonErrorKey] = failureReason as AnyObject?
+            
+            dict[NSUnderlyingErrorKey] = error as NSError
+            let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+            // Replace this with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
+            abort()
+        }
+        
+        return coordinator
+    }()
+    
+    lazy var managedObjectContext: NSManagedObjectContext = {
+        let coordinator = self.persistentStoreCoordinator
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = coordinator
+        return managedObjectContext
+    }()
+    
+    fileprivate func saveContext() {
+        if self.managedObjectContext.hasChanges {
+            do {
+                try self.managedObjectContext.save()
+            } catch let exception {
+                print("CDHelper error: Cannot save entity. Reason: \(exception)")
+            }
+        }
     }
 }

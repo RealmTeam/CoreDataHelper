@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		480655641DA7AA2D004C66E7 /* CoreDataHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480655631DA7AA2D004C66E7 /* CoreDataHelperTests.swift */; };
+		480655661DA7AA2E004C66E7 /* CoreDataHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A500DF1C9227080000B0F9 /* CoreDataHelper.framework */; };
 		48A500E31C9227080000B0F9 /* CoreDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 48A500E21C9227080000B0F9 /* CoreDataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		48A500EA1C9227080000B0F9 /* CoreDataHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A500DF1C9227080000B0F9 /* CoreDataHelper.framework */; };
 		48A501281C924AEE0000B0F9 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A501271C924AEE0000B0F9 /* CoreDataHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		48A500EB1C9227080000B0F9 /* PBXContainerItemProxy */ = {
+		480655671DA7AA2E004C66E7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 48A500D61C9227080000B0F9 /* Project object */;
 			proxyType = 1;
@@ -23,14 +24,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		480655611DA7AA2D004C66E7 /* CoreDataHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreDataHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		480655631DA7AA2D004C66E7 /* CoreDataHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelperTests.swift; sourceTree = "<group>"; };
+		480655651DA7AA2E004C66E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		48A500DF1C9227080000B0F9 /* CoreDataHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoreDataHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48A500E21C9227080000B0F9 /* CoreDataHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataHelper.h; sourceTree = "<group>"; };
 		48A500E41C9227080000B0F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		48A500E91C9227080000B0F9 /* CoreDataHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreDataHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48A501271C924AEE0000B0F9 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4806555E1DA7AA2D004C66E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				480655661DA7AA2E004C66E7 /* CoreDataHelper.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		48A500DB1C9227080000B0F9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -38,21 +49,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		48A500E61C9227080000B0F9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				48A500EA1C9227080000B0F9 /* CoreDataHelper.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		480655621DA7AA2D004C66E7 /* CoreDataHelperTests */ = {
+			isa = PBXGroup;
+			children = (
+				480655631DA7AA2D004C66E7 /* CoreDataHelperTests.swift */,
+				480655651DA7AA2E004C66E7 /* Info.plist */,
+			);
+			path = CoreDataHelperTests;
+			sourceTree = "<group>";
+		};
 		48A500D51C9227080000B0F9 = {
 			isa = PBXGroup;
 			children = (
 				48A500E11C9227080000B0F9 /* CoreDataHelper */,
+				480655621DA7AA2D004C66E7 /* CoreDataHelperTests */,
 				48A500E01C9227080000B0F9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,7 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				48A500DF1C9227080000B0F9 /* CoreDataHelper.framework */,
-				48A500E91C9227080000B0F9 /* CoreDataHelperTests.xctest */,
+				480655611DA7AA2D004C66E7 /* CoreDataHelperTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -90,6 +103,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		480655601DA7AA2D004C66E7 /* CoreDataHelperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 480655691DA7AA2E004C66E7 /* Build configuration list for PBXNativeTarget "CoreDataHelperTests" */;
+			buildPhases = (
+				4806555D1DA7AA2D004C66E7 /* Sources */,
+				4806555E1DA7AA2D004C66E7 /* Frameworks */,
+				4806555F1DA7AA2D004C66E7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				480655681DA7AA2E004C66E7 /* PBXTargetDependency */,
+			);
+			name = CoreDataHelperTests;
+			productName = CoreDataHelperTests;
+			productReference = 480655611DA7AA2D004C66E7 /* CoreDataHelperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		48A500DE1C9227080000B0F9 /* CoreDataHelper */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 48A500F31C9227080000B0F9 /* Build configuration list for PBXNativeTarget "CoreDataHelper" */;
@@ -108,41 +139,23 @@
 			productReference = 48A500DF1C9227080000B0F9 /* CoreDataHelper.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		48A500E81C9227080000B0F9 /* CoreDataHelperTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 48A500F61C9227080000B0F9 /* Build configuration list for PBXNativeTarget "CoreDataHelperTests" */;
-			buildPhases = (
-				48A500E51C9227080000B0F9 /* Sources */,
-				48A500E61C9227080000B0F9 /* Frameworks */,
-				48A500E71C9227080000B0F9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				48A500EC1C9227080000B0F9 /* PBXTargetDependency */,
-			);
-			name = CoreDataHelperTests;
-			productName = CoreDataHelperTests;
-			productReference = 48A500E91C9227080000B0F9 /* CoreDataHelperTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		48A500D61C9227080000B0F9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Louis Bodart";
 				TargetAttributes = {
+					480655601DA7AA2D004C66E7 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 58G6JMC92R;
+						ProvisioningStyle = Automatic;
+					};
 					48A500DE1C9227080000B0F9 = {
 						CreatedOnToolsVersion = 7.2.1;
-						LastSwiftMigration = 0800;
-					};
-					48A500E81C9227080000B0F9 = {
-						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 58G6JMC92R;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -160,20 +173,20 @@
 			projectRoot = "";
 			targets = (
 				48A500DE1C9227080000B0F9 /* CoreDataHelper */,
-				48A500E81C9227080000B0F9 /* CoreDataHelperTests */,
+				480655601DA7AA2D004C66E7 /* CoreDataHelperTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		48A500DD1C9227080000B0F9 /* Resources */ = {
+		4806555F1DA7AA2D004C66E7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		48A500E71C9227080000B0F9 /* Resources */ = {
+		48A500DD1C9227080000B0F9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -183,6 +196,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4806555D1DA7AA2D004C66E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				480655641DA7AA2D004C66E7 /* CoreDataHelperTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		48A500DA1C9227080000B0F9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -191,24 +212,50 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		48A500E51C9227080000B0F9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		48A500EC1C9227080000B0F9 /* PBXTargetDependency */ = {
+		480655681DA7AA2E004C66E7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 48A500DE1C9227080000B0F9 /* CoreDataHelper */;
-			targetProxy = 48A500EB1C9227080000B0F9 /* PBXContainerItemProxy */;
+			targetProxy = 480655671DA7AA2E004C66E7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		4806556A1DA7AA2E004C66E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = 58G6JMC92R;
+				INFOPLIST_FILE = CoreDataHelperTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = fr.louisbodart.CoreDataHelperTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		4806556B1DA7AA2E004C66E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = 58G6JMC92R;
+				INFOPLIST_FILE = CoreDataHelperTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = fr.louisbodart.CoreDataHelperTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		48A500F11C9227080000B0F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -346,33 +393,17 @@
 			};
 			name = Release;
 		};
-		48A500F71C9227080000B0F9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEVELOPMENT_TEAM = 58G6JMC92R;
-				INFOPLIST_FILE = CoreDataHelperTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = fr.louisbodart.CoreDataHelperTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		48A500F81C9227080000B0F9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEVELOPMENT_TEAM = 58G6JMC92R;
-				INFOPLIST_FILE = CoreDataHelperTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = fr.louisbodart.CoreDataHelperTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		480655691DA7AA2E004C66E7 /* Build configuration list for PBXNativeTarget "CoreDataHelperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4806556A1DA7AA2E004C66E7 /* Debug */,
+				4806556B1DA7AA2E004C66E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		48A500D91C9227080000B0F9 /* Build configuration list for PBXProject "CoreDataHelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -387,15 +418,6 @@
 			buildConfigurations = (
 				48A500F41C9227080000B0F9 /* Debug */,
 				48A500F51C9227080000B0F9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		48A500F61C9227080000B0F9 /* Build configuration list for PBXNativeTarget "CoreDataHelperTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				48A500F71C9227080000B0F9 /* Debug */,
-				48A500F81C9227080000B0F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
