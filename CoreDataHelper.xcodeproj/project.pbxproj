@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		480655641DA7AA2D004C66E7 /* CoreDataHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480655631DA7AA2D004C66E7 /* CoreDataHelperTests.swift */; };
 		480655661DA7AA2E004C66E7 /* CoreDataHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A500DF1C9227080000B0F9 /* CoreDataHelper.framework */; };
+		4890F20B1DEDCF600055F4EE /* CDHelperRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890F20A1DEDCF600055F4EE /* CDHelperRequest.swift */; };
+		4890F20E1DEDCFAE0055F4EE /* CDHelperTestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4890F20C1DEDCFAE0055F4EE /* CDHelperTestModel.xcdatamodeld */; };
+		4890F2121DEDD7850055F4EE /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890F2101DEDD7850055F4EE /* User+CoreDataClass.swift */; };
+		4890F2131DEDD7850055F4EE /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4890F2111DEDD7850055F4EE /* User+CoreDataProperties.swift */; };
+		4894D2C01E7DBC5D0062EA92 /* CDHelperPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4894D2BF1E7DBC5D0062EA92 /* CDHelperPredicate.swift */; };
+		4894D2C21E7DBD150062EA92 /* CDHelperEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4894D2C11E7DBD150062EA92 /* CDHelperEntity.swift */; };
 		48A500E31C9227080000B0F9 /* CoreDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 48A500E21C9227080000B0F9 /* CoreDataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48A501281C924AEE0000B0F9 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A501271C924AEE0000B0F9 /* CoreDataHelper.swift */; };
 /* End PBXBuildFile section */
@@ -27,6 +33,12 @@
 		480655611DA7AA2D004C66E7 /* CoreDataHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreDataHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		480655631DA7AA2D004C66E7 /* CoreDataHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelperTests.swift; sourceTree = "<group>"; };
 		480655651DA7AA2E004C66E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4890F20A1DEDCF600055F4EE /* CDHelperRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDHelperRequest.swift; sourceTree = "<group>"; };
+		4890F20D1DEDCFAE0055F4EE /* CDHelperTestModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CDHelperTestModel.xcdatamodel; sourceTree = "<group>"; };
+		4890F2101DEDD7850055F4EE /* User+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4890F2111DEDD7850055F4EE /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4894D2BF1E7DBC5D0062EA92 /* CDHelperPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDHelperPredicate.swift; sourceTree = "<group>"; };
+		4894D2C11E7DBD150062EA92 /* CDHelperEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDHelperEntity.swift; sourceTree = "<group>"; };
 		48A500DF1C9227080000B0F9 /* CoreDataHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoreDataHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48A500E21C9227080000B0F9 /* CoreDataHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataHelper.h; sourceTree = "<group>"; };
 		48A500E41C9227080000B0F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,9 +68,20 @@
 			isa = PBXGroup;
 			children = (
 				480655631DA7AA2D004C66E7 /* CoreDataHelperTests.swift */,
+				4890F20F1DEDD7730055F4EE /* Models */,
+				4890F20C1DEDCFAE0055F4EE /* CDHelperTestModel.xcdatamodeld */,
 				480655651DA7AA2E004C66E7 /* Info.plist */,
 			);
 			path = CoreDataHelperTests;
+			sourceTree = "<group>";
+		};
+		4890F20F1DEDD7730055F4EE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4890F2101DEDD7850055F4EE /* User+CoreDataClass.swift */,
+				4890F2111DEDD7850055F4EE /* User+CoreDataProperties.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		48A500D51C9227080000B0F9 = {
@@ -85,6 +108,9 @@
 				48A500E21C9227080000B0F9 /* CoreDataHelper.h */,
 				48A500E41C9227080000B0F9 /* Info.plist */,
 				48A501271C924AEE0000B0F9 /* CoreDataHelper.swift */,
+				4894D2C11E7DBD150062EA92 /* CDHelperEntity.swift */,
+				4890F20A1DEDCF600055F4EE /* CDHelperRequest.swift */,
+				4894D2BF1E7DBC5D0062EA92 /* CDHelperPredicate.swift */,
 			);
 			path = CoreDataHelper;
 			sourceTree = "<group>";
@@ -200,7 +226,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4890F20E1DEDCFAE0055F4EE /* CDHelperTestModel.xcdatamodeld in Sources */,
 				480655641DA7AA2D004C66E7 /* CoreDataHelperTests.swift in Sources */,
+				4890F2131DEDD7850055F4EE /* User+CoreDataProperties.swift in Sources */,
+				4890F2121DEDD7850055F4EE /* User+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,7 +237,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4890F20B1DEDCF600055F4EE /* CDHelperRequest.swift in Sources */,
 				48A501281C924AEE0000B0F9 /* CoreDataHelper.swift in Sources */,
+				4894D2C01E7DBC5D0062EA92 /* CDHelperPredicate.swift in Sources */,
+				4894D2C21E7DBD150062EA92 /* CDHelperEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +435,7 @@
 				4806556B1DA7AA2E004C66E7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		48A500D91C9227080000B0F9 /* Build configuration list for PBXProject "CoreDataHelper" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +456,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4890F20C1DEDCFAE0055F4EE /* CDHelperTestModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4890F20D1DEDCFAE0055F4EE /* CDHelperTestModel.xcdatamodel */,
+			);
+			currentVersion = 4890F20D1DEDCFAE0055F4EE /* CDHelperTestModel.xcdatamodel */;
+			path = CDHelperTestModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 48A500D61C9227080000B0F9 /* Project object */;
 }
