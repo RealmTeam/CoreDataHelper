@@ -1,14 +1,69 @@
 # CoreDataHelper
-
 CoreDataHelper is a tiny Swift Framework that helps you to easily manage CoreData objects in the main context.
+
+## Why?
+I love CoreData. I use it in almost 99.9% of my iOS projects but one day, I was tired of writing tons of code each time I wanted to create, fetch or delete a single entity. I know that there are thousands of libraries to wrap CoreData but I wanted to create mine. Not because I wanted to be famous (and I won't be for sure) but because it was for me a very good opportunity to dive deep in this very interesting and powerfull framework.
+
+On top of that, I know that a lot of Apple Developers are scared of using CoreData when they read the documentation for the first time. I was one of them.
+
+By creating CoreDataHelper, I wanted to have something human readable and nicer to code and look.
+
+## When should I use it?
+As long as your project is using CoreData, you can include CoreDataHelper! 
+
+## Examples
+### Create a new entity
+```swift
+let user: User = User.new()
+// OR
+let user: User = User.new([
+  "firstName": "John",
+  "lastName": "Doe"
+])
+```
+
+### Save this entity
+```swift
+user.save()
+```
+
+### Delete this entity
+```swift
+user.destroy()
+```
+
+### Find one or more entity(ies)
+#### Getting all
+Here is the most basic requests you can do:
+```swift
+let users: [User] = User.findAll.exec()
+```
+#### Getting one
+```swift
+let user: User? = User.findOne.where("firstName").isEqual(to: "John").exec()
+```
+#### Adding sort and limit
+```swift
+let users: [User] = User
+                    .findAll
+                    .where("id")
+                    .isGreater(than: 10)
+                    .sort(by: "id")
+                    .limit(10)
+                    .exec()
+```
+#### Asynchronous fetch
+```swift
+User.findAll.exec { (users) in
+  // do some stuff
+}
+```
 
 ## Installation
 
 To install this, simply add the `.xcodeproj` to your project, and do not forget to link the `.framework`.
 
-
 If you're using cocoapods, just add `pod 'CoreDataHelper'` into your `Podfile` file.
-
 
 Whenever you want to use it in your code, simply type :
 ```swift
@@ -17,167 +72,62 @@ import CoreDataHelper
 
 ## Getting started
 
-To start with CoreDataHelper, it is pretty simple. Just go to your `AppDelegate.swift` file and add the following code :
+Using CoreDataHelper is pretty simple because you have (almost) nothing to do. You can leave the library taking care of your CoreData stack or initialize it with your own context by adding the following code in your `AppDelegate.swift`:
 ```swift
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-  CDHelper.initializeWithMainContext(self.managedObjectContext)
+  CDHelper.initialize(withContext: self.persistentContainer.viewContext)
   
   return true
 }
 ```
 
-Note that your project must use CoreData.
-
 ## Create your first entity class
-
 Let's create an entity named `User` which contains 4 properties :
-- first_name (String)
-- last_name (String)
-- email (String)
-- age (Integer)
+- id          (Integer)
+- first_name  (String)
+- last_name   (String)
+- email       (String)
 
-Once you created the class `User` which inherit of `NSManagedObject`, just add the `CDHelperEntity` protocol like that :
+Once you created the class `User` which inherit of `NSManagedObject`, the only thing you have to do is to add the `CDHelperEntity` protocol like that:
 ```swift
 class User: NSManagedObject, CDHelperEntity {
-    
-  static var entityName: String! { return "User" } // Required
-    
-  @NSManaged var first_name: String?
-  @NSManaged var age: NSNumber?
-  @NSManaged var email: String?
-  @NSManaged var last_name: String?
-}
-```
-
-You just need to add the `entityName` variable to be conform with the `CDHelperEntity` protocol and that's it ! You're ready to use all the features of _CoreDataHelper_ !
-
-## Play with your entity
-
-### Create a new entity
-
-There are two ways to create a new entity.
-First, you can create an empty entity and fill it after :
-```swift
-let user: User = User.new()
-user.first_name = "John"
-user.last_name = "Doe"
-user.email = "john.doe@foobar.com"
-user.age = 42
-```
-
-You can also create an entity using a data dictionary :
-```swift
-let userData: [String: AnyObject?] = [
-  "first_name": "John",
-  "last_name": "Doe",
-  "email": "john.doe@foobar.com",
-  "age": 42,
-]
-
-let user: User = User.new(userData)
-```
-
-### Save your entity
-To save your entity, simply use the `.save()` method like that :
-```swift
-let user: User = User.new()
-// ...
-user.save()
-```
-
-### Delete your entity
-If you don't need your entity anymore, you can use the `.destroy()` method :
-```swift
-let user: User = User.new()
-// ...
-user.save()
-
-// ... Ok, let's admit you want to delete your user
-user.destroy()
-```
-
-### Retrieve your entities
-There are different ways to retrieve your entities.
-
-#### Synchronously
-##### findAll()
-- Basic use
-```swift
-let users: [User] = User.findAll()
-```
-- Using sort descriptor(s)
-```swift
-let users: [User] = User.findAll(usingSortDescriptors: [NSSortDescriptor(key: "first_name", ascending: true)])
-```
-
-##### findOne()
-```swift
-let user: User? = User.findOne("first_name=\"John\"")
-```
-
-##### find()
-- Basic use
-```swift
-let users: [User] = User.find("first_name=\"John\"")
-```
-- Using sort descriptor(s)
-```swift
-let users: [User] = User.find("first_name=\"John\"", usingSortDescriptors: [NSSortDescriptor(key: "first_name", ascending: true)])
-```
-- Using fetch limit
-```swift
-let users: [User] = User.find("first_name=\"John\"", limit: 5)
-```
-- Using both
-```swift
-let users: [User] = User.find("first_name=\"John\"", usingSortDescriptors: [NSSortDescriptor(key: "first_name", ascending: true)], limit: 5)
-```
-
-#### Asynchronously
-##### asynchronouslyFindAll()
-- Basic use
-```swift
-User.asynchronouslyFindAll { (results: [User]) -> Void in
-  // ...
-}
-```
-- Using sort descriptor(s)
-```swift
-User.asynchronouslyFindAll(usingSortDescriptors: [NSSortDescriptor(key: "first_name", ascending: true)]) { (results: [User]) -> Void in
   // ...
 }
 ```
 
-##### asynchronouslyFindOne()
+And here you are ready to use all the features of CoreDataHelper!
+
+### What's under the hood?
+CoreDataHelper uses the class name to figure out the entity name because that's almost always the case. If your class doesn't the same name as your enity, you can this property to your `NSManagedObject` subclass:
+
 ```swift
-User.asynchronouslyFindOne("first_name=\"John\"") { (user: User?) -> Void in
-  // ...
-}
+static var entityName: String { return "YourEntityName" }
 ```
 
-##### asynchronouslyFind()
-- Basic use
+But keep in mind that this practice should remains occasional and is strongly discouraged.
+
+## Try it yourself!
+Because CoreDataHelper has been made to be intuitive, no documentation should be required right? Of course, I'm just kidding, I will start to write the documentation as soon as possible but until then, you can try it yourself!
+
+There is just one VERY important thing to have in mind when you use CoreDataHelper: **Be logical**.
+
+For example, don't try to fecth or delete an entity which has not been created. It doesn't make sense.
+
+Same thing when you write your find request.
 ```swift
-User.asynchronouslyFind("first_name=\"John\"") { (user: [User]) -> Void in
-  // ...
-}
+// WRONG
+User.findAll.and("lastName").isEqual(to: "Doe").exec()
 ```
-- Using sort descriptor(s)
+
+Does the sentence _"Find me all entities and name is equal to 'Doe'"_ make any sense to you? Hum, not really I guess.
+
+When you're writing a fetch request, just ask yourself _"What do I want?"_. For example _"I want all the users where the first name is equal to 'John' and the id is greater than 42."_
+
+All right, let's ask CoreDataHelper about that:
 ```swift
-User.asynchronouslyFind("first_name=\"John\"", usingSortDescriptors: [NSSortDescriptor(key: "first_name", ascending: true)]) { (user: [User]) -> Void in
-  // ...
-}
+// GOOD
+User.findAll.where("firstName").isEqual(to: "John").and("id").isGreater(than: 42).exec()
 ```
-- Using fetch limit
-```swift
-User.asynchronouslyFind("first_name=\"John\"", limit: 5) { (user: [User]) -> Void in
-  // ...
-}
-```
-- Using both
-```swift
-User.asynchronouslyFind("first_name=\"John\"", usingSortDescriptors: [NSSortDescriptor(key: "first_name", ascending: true)], limit: 5) { (user: [User]) -> Void in
-  // ...
-}
-```
+
+Enjoy CoreDataHelper! 🍾
